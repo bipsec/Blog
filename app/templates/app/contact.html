@@ -1,0 +1,24 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block extra_head %}
+    <link rel="stylesheet" href={% static 'app/style.css' %}/>
+{% endblock %}
+{% block content %}
+
+<div class="container">
+		<h1>Contact Us</h1>
+		<form>
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name" placeholder="Enter your name">
+
+			<label for="email">Email:</label>
+			<input type="email" id="email" name="email" placeholder="Enter your email">
+
+			<label for="message">Message:</label>
+			<textarea id="message" name="message" placeholder="Enter your message"></textarea>
+
+			<button type="submit">Submit</button>
+		</form>
+	</div>
+
+{% endblock content %}

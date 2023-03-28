@@ -1,41 +1,67 @@
 {% extends 'app/base.html' %}
 {% block content %}
     {% for post in posts %}
-        <article class="media content-section">
-            <img src={{ post.author.profile.image.url }} alt="profile_image" class="rounded-circle article-img">
-        <div class="media-body">
-            <div class="article-metadata">
-                    <a class="mr-2" href={%  url 'user-posts' post.author.username %}>{{ post.author }}</a>
 
-                    <small class="text-muted">{{ post.date|date:"F d, Y" }}</small>
+        <div class="card">
+            <div class="profile">
+            <span>
+                <img src={{ post.author.profile.image.url }} alt="profile_image" class="rounded-circle article-img">
+            </span>
+
+            <ul class="username">
+                <li class="name"> <a class="mr-2" href={%  url 'user-posts' post.author.username %}>{{ post.author }}</a> </li>
+                <li class="time"> <small class="text-muted">{{ post.date|date:"F d, Y" }}</small> </li>
+
+            </ul>
+            </div>
+
+            {# Image for every post #}
+{#            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=765&q=80')" title="Unsplash Image">#}
+{##}
+{#            </div>#}
+
+
+            <div class="card-footer">
+                <p class="post-title">Post Title: <a  href={% url 'post-detail' post.id %}>{{ post.title }}</a></p>
+                <div class="post">Post: {{ post.content }}</div>
+            <ul class="reaction">
+              <li>
+                <i class="fa fa-thumbs-up"></i>
+                <span class="count">12</span>
+              </li>
+              <li>
+                <i class="fa fa-comments"></i>
+                <span class="count">5</span>
+              </li>
+              <li>
+                <i class="fa fa-star"></i>
+                <span class="count">23</span>
+              </li>
+            </ul>
 
             </div>
-                    <p><a class="article-title" href={% url 'post-detail' post.id %}>{{ post.title }}</a></p>
-                    <p class="article-content">{{ post.content }}</p>
+
         </div>
-        </article>
     {% endfor %}
 
     {% if is_paginated %}
         {% if page_obj.has_previous %}
-            <a class="btn btn-primary mb-4" href="?page=1">First</a>
-            <a class="btn btn-primary mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            <a class="button-17 btn mb-4 " href="?page=1">First</a>
+            <a class="button-17 btn  mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
         {% endif %}
 
         {% for num in page_obj.paginator.page_range %}
             {% if page_obj.number == num %}
-                <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                <a class="button-17 btn  mb-4" href="?page={{ num }}">{{ num }}</a>
                 {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                <a class="button-17 btn  mb-4" href="?page={{ num }}">{{ num }}</a>
             {% endif %}
         {% endfor %}
         {% if page_obj.has_next %}
-            <a class="btn btn-primary mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-            <a class="btn btn-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            <a class="button-17 btn  mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a class="button-17 btn  mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
         {% endif %}
 
     {% endif %}
 
-
 {% endblock content %}
-

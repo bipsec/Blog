@@ -9,8 +9,9 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
     <link rel="stylesheet" type="text/css" href="{% static 'app/main.css' %}">
+    {% block extra_head %}{% endblock %}
 
     {% if title %}
         <title>Django Blog - {{ title }}</title>
@@ -19,21 +20,16 @@
     {% endif %}
 </head>
 <body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Django Blog</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
-              <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
-            </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-                {% if user.is_authenticated %}
+    <header>
+          <ul class="menu-items">
+            <li class="red-circle"></li>
+            <li class="yellow-circle"></li>
+            <li class="green-circle"></li>
+          </ul>
+
+  <span> <a href="{% url 'blog-home' %}">Blog App</a> </span>
+  <div class="top-right">
+      {% if user.is_authenticated %}
                     <a class="nav-item nav-link" href={% url 'post-form' %}>New Post</a>
                     <a class="nav-item nav-link" href={% url 'profile' %}>Profile</a>
                     <a class="nav-item nav-link" href={% url 'logout' %}>Logout</a>
@@ -43,38 +39,46 @@
                     <a class="nav-item nav-link" href={% url 'register' %}>Register</a>
 
                 {% endif %}
+    </div>
 
-            </div>
-          </div>
-        </div>
-      </nav>
     </header>
-    <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-8">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
-                    {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-          {% block content %}{% endblock %}
-        </div>
-        <div class="col-md-4">
-          <div class="content-section">
-            <h3>Our Sidebar</h3>
-            <p class='text-muted'>You can put any information here you'd like.
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
-                <li class="list-group-item list-group-item-light">etc</li>
-              </ul>
-            </p>
-          </div>
-        </div>
-      </div>
+    <main role="main">
+
+        <section class="left-sidebar">
+
+          <ul>
+            <li class="active">
+              <img src="/media/asset/images/home.png" alt="Flaticons" title="News Feed">
+                <a href="{% url 'blog-home' %}"><p> Home </p> </a>
+            </li>
+
+            <li>
+              <img src="/media/asset/images/about.png" alt="Flaticons" title="Messenger">
+              <a href="{% url 'blog-about' %}"><p> About </p> </a>
+            </li>
+
+            <li>
+              <img src="/media/asset/images/contact.jpg" alt="Flaticons" title="News Feed">
+              <a href="{% url 'blog-contact' %}"><p> Contact </p> </a>
+            </li>
+
+          </ul>
+
+        </section>
+
+        <article class="news-feed">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+              {% block content %}
+
+
+              {% endblock %}
+        </article>
     </main>
 
     <!-- Optional JavaScript -->
